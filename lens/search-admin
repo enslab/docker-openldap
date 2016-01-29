@@ -1,0 +1,1 @@
+docker exec lens-openldap ldapsearch -x -h 172.17.0.1 -b dc=lens,dc=csie,dc=ncku,dc=edu,dc=tw -D "cn=admin,dc=lens,dc=csie,dc=ncku,dc=edu,dc=tw" -w admin

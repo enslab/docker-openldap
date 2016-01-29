@@ -1,0 +1,4 @@
+docker run --name lens-openldap-backup \
+  -v ${PWD}/backup:/data/backup \
+  -d osixia/openldap-backup:0.1.7 \
+  --volumes-from lens-openldap
