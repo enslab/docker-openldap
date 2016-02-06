@@ -1,0 +1,2 @@
+source ./ldap-server-env
+docker exec lens-openldap-master ldapsearch -x -h ${LDAP_M} -b dc=lens,dc=csie,dc=ncku,dc=edu,dc=tw -D "cn=admin,dc=lens,dc=csie,dc=ncku,dc=edu,dc=tw" -w admin

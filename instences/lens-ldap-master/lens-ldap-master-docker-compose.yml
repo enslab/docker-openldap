@@ -1,7 +1,7 @@
 ldap:
   labels:
     io.rancher.scheduler.affinity:host_label: lens=master
-  image: osixia/openldap:1.1.0
+  image: lens/openldap:1.1.0-1
   stdin_open: true
   ports:
     - "389:389"

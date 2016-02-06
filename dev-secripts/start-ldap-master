@@ -1,0 +1,6 @@
+docker run --name lens-openldap-master \
+  -p 389:389 \
+  -p 636:636 \
+  -v ${PWD}../instences/lens-ldap-master/environment:/container/environment/01-custom:ro \
+  -v ${PWD}../instences/lens-ldap-master/certs:/container/service/slapd/assets/certs \
+  -d lens/openldap:1.1.0-1
