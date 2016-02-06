@@ -1,0 +1,12 @@
+ldap:
+  labels:
+    io.rancher.scheduler.affinity:host_label: lens=master
+  image: osixia/openldap:1.1.0
+  stdin_open: true
+  ports:
+    - "389:389"
+    - "636:636"
+  volume_driver: convoy-nfs
+  volumes:
+    - lens-ldap-master-environment:/container/environment/01-custom:ro
+    - lens-ldap-master-certs:/container/service/slapd/assets/certs
