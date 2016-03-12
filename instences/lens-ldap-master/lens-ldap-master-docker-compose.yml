@@ -3,7 +3,7 @@ ldap:
   domainname: lens.csie.ncku.edu.tw
   labels:
     io.rancher.scheduler.affinity:host_label: lens=master
-  image: lens/openldap:1.1.0-1
+  image: lens/openldap:1.1.1-1
   stdin_open: true
   ports:
     - "389:389"
@@ -28,7 +28,7 @@ ldap-admin:
 ldap-backup:
   labels:
     io.rancher.scheduler.affinity:host_label: lens=master
-  image: lens/openldap-backup:0.1.7-1
+  image: lens/openldap-backup:0.1.8
   stdin_open: true
   volume_driver: convoy-nfs
   volumes:
