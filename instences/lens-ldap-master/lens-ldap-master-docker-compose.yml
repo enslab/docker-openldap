@@ -1,4 +1,6 @@
 ldap:
+  hostname: ldm
+  domainname: lens.csie.ncku.edu.tw
   labels:
     io.rancher.scheduler.affinity:host_label: lens=master
   image: lens/openldap:1.1.0-1
@@ -6,7 +8,34 @@ ldap:
   ports:
     - "389:389"
     - "636:636"
+  volumes:
+    - /var/lib/data/lens-ldap-master/environment:/container/environment/01-custom:ro
+    - /var/lib/data/lens-ldap-master/certs:/container/service/slapd/assets/certs
+    - /var/lib/data/lens-ldap-master/ldap:/var/lib/ldap
+    - /var/lib/data/lens-ldap-master/slapd.d:/etc/ldap/slapd.d
+ldap-admin:
+  hostname: ldm-admin
+  domainname: lens.csie.ncku.edu.tw
+  labels:
+    io.rancher.scheduler.affinity:host_label: lens=master
+  image: osixia/phpldapadmin:0.6.7
+  stdin_open: true
+  links:
+    - ldap
+  environment:
+    - PHPLDAPADMIN_LDAP_HOSTS=ldap
+    - PHPLDAPADMIN_HTTPS=false
+ldap-backup:
+  labels:
+    io.rancher.scheduler.affinity:host_label: lens=master
+  image: lens/openldap-backup:0.1.7-1
+  stdin_open: true
   volume_driver: convoy-nfs
   volumes:
-    - lens-ldap-master-environment:/container/environment/01-custom:ro
-    - lens-ldap-master-certs:/container/service/slapd/assets/certs
+    - lens-ldap-master-backup:/data/backup
+    - /data/lens-ldap-master/ldap:/var/lib/ldap
+    - /data/lens-ldap-master/slapd.d:/etc/ldap/slapd.d
+  environment:
+    - LDAP_BACKUP_TTL=15
+    - LDAP_BACKUP_CONFIG_CRON_EXP=0 12 * * *
+    - LDAP_BACKUP_DATA_CRON_EXP=0 12 * * *
